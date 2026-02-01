@@ -21,7 +21,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: "3.19.0"
+          # Leaving version unpinned to get latest stable
 
       - name: Install Dependencies
         run: |
