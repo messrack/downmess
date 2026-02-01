@@ -3,7 +3,7 @@ import json
 import subprocess
 import yt_dlp
 from datetime import datetime
-from plyer import notification
+# from plyer import notification (Moved to local scope)
 
 # Constants
 HISTORY_FILE = "downmess_history.json"
@@ -471,6 +471,7 @@ class DownmessCore:
             
     def send_notification(self, title, message):
         try:
+            from plyer import notification
             notification.notify(
                 title=title,
                 message=message,

@@ -2,3 +2,4 @@ flet
 yt-dlp
 Pillow
 requests
+plyer
