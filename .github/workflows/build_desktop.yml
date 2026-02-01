@@ -33,16 +33,25 @@ jobs:
                   pip install -r requirements_mobile.txt
                   pip install pyinstaller
 
-            - name: Build Desktop Executable (Flet Pack)
+            - name: Prepare Assets (Cross-Platform)
+              shell: bash
               run: |
-                  flet pack downmess_mobile.py --name "Downmess" --product-name "Downmess" --product-version "2.0.0" --copyright "Messrack" --icon "assets/icon.png"
-              continue-on-error: true
+                  # Create a dummy icon if it doesn't exist to prevent errors
+                  mkdir -p assets
+                  if [ ! -f assets/icon.png ]; then touch assets/icon.png; fi
+
+            - name: Build with PyInstaller (Windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pyinstaller downmess_mobile.py --name "Downmess" --onefile --noconsole --icon "assets/icon.png" --add-data "assets;assets"
+
+            - name: Build with PyInstaller (Mac/Linux)
+              if: matrix.os != 'windows-latest'
+              run: |
+                  pyinstaller downmess_mobile.py --name "Downmess" --onefile --noconsole --add-data "assets:assets"
 
             - name: Upload Artifacts
               uses: actions/upload-artifact@v4
               with:
                   name: downmess-${{ matrix.os }}
-                  path: |
-                      dist/*.exe
-                      dist/*.app
-                      dist/*
+                  path: dist/*
