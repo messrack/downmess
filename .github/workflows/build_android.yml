@@ -32,9 +32,12 @@ jobs:
           pip install -r requirements_mobile.txt
           pip install flet
 
+      - name: Prepare Entry Point
+        run: cp downmess_mobile.py main.py
+
       - name: Build APK
         run: |
-          flet build apk downmess_mobile.py --module-name downmess_mobile --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" -v
+          flet build apk . --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" -v
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
