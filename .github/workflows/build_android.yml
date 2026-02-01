@@ -34,7 +34,7 @@ jobs:
           flet build apk downmess_mobile.py --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" -v
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: downmess-release.apk
           path: build/apk/*.apk
