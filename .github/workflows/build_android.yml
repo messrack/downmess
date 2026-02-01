@@ -21,7 +21,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          # Leaving version unpinned to get latest stable
+
+      - name: Accept Android Licenses
+        run: |
+          yes | flutter doctor --android-licenses || true
 
       - name: Install Dependencies
         run: |
@@ -31,7 +34,7 @@ jobs:
 
       - name: Build APK
         run: |
-          flet build apk downmess_mobile.py --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" -v
+          flet build apk downmess_mobile.py --module-name downmess_mobile --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" -v
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
