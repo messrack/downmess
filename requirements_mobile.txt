@@ -1,0 +1,4 @@
+flet
+yt-dlp
+Pillow
+requests

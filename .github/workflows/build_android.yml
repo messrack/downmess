@@ -1,0 +1,37 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements_mobile.txt
+        
+    - name: Flet Build APK
+      uses: flet-dev/flet-action@v1
+      with:
+        # The python file to run
+        script: downmess_mobile.py
+        # App specific settings
+        options: --product "Downmess Mobile" --org "com.messrack.downmess" --description "Downmess Luxury Tech Mobile"
+        
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: downmess-release.apk
+        path: build/apk/
