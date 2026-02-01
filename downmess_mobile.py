@@ -14,6 +14,17 @@ MESS_STEEL = "#4A4A4A"       # Borders / Inactive
 MESS_TEXT_MAIN = "#E0E0E0"   # Main Text (off-white)
 MESS_TEXT_DIM = "#B0B0B0"    # Secondary Text
 
+def check_permissions():
+    """Request necessary permissions on Android"""
+    try:
+        from plyer import permission
+        permission.request_permissions([
+            permission.READ_EXTERNAL_STORAGE, 
+            permission.WRITE_EXTERNAL_STORAGE
+        ])
+    except:
+        pass
+
 def main(page: ft.Page):
     # Setup Page
     page.title = "Downmess Mobile"
@@ -30,7 +41,11 @@ def main(page: ft.Page):
         "Roboto": "https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.ttf"
     }
     page.theme = ft.Theme(font_family="Roboto")
+    
+    # Run permissions check
+    check_permissions()
 
+    # Core will be initialized lazily or on first use to prevent blocking
     core = DownmessCore()
 
     # --- UI HELPERS ---

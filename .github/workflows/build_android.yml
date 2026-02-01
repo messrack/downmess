@@ -36,9 +36,10 @@ jobs:
       - name: Prepare Entry Point
         run: cp downmess_mobile.py main.py
 
-      - name: Build APK
+      - name: Build APK (With Permissions)
+        # Adding permission flags explicitly for Android
         run: |
-          flet build apk . --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" -v
+          flet build apk . --product "Downmess" --org "com.messrack.downmess" --project "downmess_mobile" --permissions "android.permission.INTERNET,android.permission.READ_EXTERNAL_STORAGE,android.permission.WRITE_EXTERNAL_STORAGE" -v
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
